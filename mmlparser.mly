@@ -1,14 +1,12 @@
 %{
-
-  open Lexing
+(*  open Lexing *)
   open Mml
 
 %}
 
-%token PLUS STAR MINUS EQUAL LPAR RPAR
+%token PLUS STAR
 %token <int> CST
 %token <string> IDENT
-%token FUN ARROW LET REC IN IF THEN ELSE
 %token EOF
 
 %left PLUS
@@ -18,6 +16,7 @@
 %type <Mml.prog> program
 
 %%
+
 
 program:
 | e=expression EOF { e }
