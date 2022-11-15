@@ -1,0 +1,6 @@
+# dune init project Mini_ML
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Workspace root:
+# /home/betacodd/Bureau/LDD3/info/compilation/mml_eytan_sam/tests
+# Auto-detected concurrency: 8

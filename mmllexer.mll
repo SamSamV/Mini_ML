@@ -36,10 +36,22 @@ rule token = parse
       { comment lexbuf; token lexbuf }
   | number as n
       { CST(int_of_string n) }
+  |ident as id
+      {keyword_or_ident id}
   | "+"
       { PLUS }
   | "*"
       { STAR }
+  | "-"
+      { MINUS }
+  | "="
+      { EQUAL }
+  | "->"
+      { ARROW }
+  | "("
+      { LPAR }
+  | ")"
+      {RPAR}
   | _
       { raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) }
   | eof
@@ -50,6 +62,8 @@ and comment = parse
       { () }
   | "(*"
       { comment lexbuf; comment lexbuf }
+  | "\n"
+      { new_line lexbuf; comment lexbuf }
   | _
       { comment lexbuf }
   | eof

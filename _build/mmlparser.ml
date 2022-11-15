@@ -1,231 +1,165 @@
 
-module MenhirBasics = struct
-  
-  exception Error
-  
-  let _eRR =
-    fun _s ->
-      raise Error
-  
-  type token = 
-    | STAR
-    | PLUS
-    | IDENT of (
-# 10 "mmlparser.mly"
-       (string)
-# 17 "mmlparser.ml"
-  )
-    | EOF
-    | CST of (
+type token = 
+  | STAR
+  | PLUS
+  | IDENT of (
 # 9 "mmlparser.mly"
+       (string)
+# 9 "mmlparser.ml"
+)
+  | EOF
+  | CST of (
+# 8 "mmlparser.mly"
        (int)
-# 23 "mmlparser.ml"
-  )
-  
-end
-
-include MenhirBasics
+# 15 "mmlparser.ml"
+)
 
 # 1 "mmlparser.mly"
   
-
-  open Lexing
+(*  open Lexing *)
   open Mml
 
 
+# 24 "mmlparser.ml"
+
+let menhir_begin_marker =
+  0
+
+and (xv_simple_expression, xv_program, xv_expression, xv_binop) =
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 37 "mmlparser.mly"
+  x
+# 33 "mmlparser.ml"
+   : (
+# 9 "mmlparser.mly"
+       (string)
 # 37 "mmlparser.ml"
-
-type ('s, 'r) _menhir_state = 
-  | MenhirState00 : ('s, _menhir_box_program) _menhir_state
-    (** State 00.
-        Stack shape : .
-        Start symbol: program. *)
-
-  | MenhirState05 : (('s, _menhir_box_program) _menhir_cell1_expression, _menhir_box_program) _menhir_state
-    (** State 05.
-        Stack shape : expression.
-        Start symbol: program. *)
-
-  | MenhirState07 : (('s, _menhir_box_program) _menhir_cell1_expression, _menhir_box_program) _menhir_state
-    (** State 07.
-        Stack shape : expression.
-        Start symbol: program. *)
-
-
-and ('s, 'r) _menhir_cell1_expression = 
-  | MenhirCell1_expression of 's * ('s, 'r) _menhir_state * (Mml.expr)
-
-and _menhir_box_program = 
-  | MenhirBox_program of (Mml.prog) [@@unboxed]
-
-let _menhir_action_1 =
-  fun e ->
+  )) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
     (
-# 30 "mmlparser.mly"
-                      ( e )
-# 67 "mmlparser.ml"
-     : (Mml.expr))
-
-let _menhir_action_2 =
-  fun e1 e2 ->
-    let op = 
-# 35 "mmlparser.mly"
-       ( Add )
-# 75 "mmlparser.ml"
-     in
-    (
-# 31 "mmlparser.mly"
-                                       ( Bop(op, e1, e2) )
-# 80 "mmlparser.ml"
-     : (Mml.expr))
-
-let _menhir_action_3 =
-  fun e1 e2 ->
-    let op = 
+# 37 "mmlparser.mly"
+          ( Var(n) )
+# 42 "mmlparser.ml"
+     : 'tv_simple_expression) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
 # 36 "mmlparser.mly"
-       ( Mul )
-# 88 "mmlparser.ml"
-     in
+  n
+# 47 "mmlparser.ml"
+   : (
+# 8 "mmlparser.mly"
+       (int)
+# 51 "mmlparser.ml"
+  )) (_startpos_n_ : Lexing.position) (_endpos_n_ : Lexing.position) (_startofs_n_ : int) (_endofs_n_ : int) (_loc_n_ : Lexing.position * Lexing.position) ->
     (
-# 31 "mmlparser.mly"
-                                       ( Bop(op, e1, e2) )
-# 93 "mmlparser.ml"
-     : (Mml.expr))
-
-let _menhir_action_4 =
-  fun code ->
-    (
-# 22 "mmlparser.mly"
-                                          ( {types=[]; code} )
-# 101 "mmlparser.ml"
-     : (Mml.prog))
-
-let _menhir_action_5 =
-  fun n ->
-    (
-# 26 "mmlparser.mly"
+# 36 "mmlparser.mly"
         ( Int(n) )
+# 56 "mmlparser.ml"
+     : 'tv_simple_expression) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 32 "mmlparser.mly"
+                                     _2
+# 61 "mmlparser.ml"
+   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
+# 32 "mmlparser.mly"
+                      code
+# 65 "mmlparser.ml"
+   : 'tv_expression) (_startpos_code_ : Lexing.position) (_endpos_code_ : Lexing.position) (_startofs_code_ : int) (_endofs_code_ : int) (_loc_code_ : Lexing.position * Lexing.position) ->
+    ((
+# 32 "mmlparser.mly"
+                                          ( {types=[]; code} )
+# 70 "mmlparser.ml"
+     : 'tv_program) : (
+# 16 "mmlparser.mly"
+      (Mml.prog)
+# 74 "mmlparser.ml"
+    )) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 23 "mmlparser.mly"
+ _1
+# 79 "mmlparser.ml"
+   : 'tv_error) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
+    ((
+# 24 "mmlparser.mly"
+    (
+      let pos = _startpos in
+      let message = Printf.sprintf
+        "echec à la position %d, %d"
+        pos.pos_lnum
+        (pos.pos_cnum - pos.pos_bol)
+      in
+      failwith message )
+# 91 "mmlparser.ml"
+     : 'tv_program) : (
+# 16 "mmlparser.mly"
+      (Mml.prog)
+# 95 "mmlparser.ml"
+    )) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 22 "mmlparser.mly"
+              _2
+# 100 "mmlparser.ml"
+   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
+# 22 "mmlparser.mly"
+  e
+# 104 "mmlparser.ml"
+   : 'tv_expression) (_startpos_e_ : Lexing.position) (_endpos_e_ : Lexing.position) (_startofs_e_ : int) (_endofs_e_ : int) (_loc_e_ : Lexing.position * Lexing.position) ->
+    ((
+# 22 "mmlparser.mly"
+                   ( e )
 # 109 "mmlparser.ml"
-     : (Mml.expr))
+     : 'tv_program) : (
+# 16 "mmlparser.mly"
+      (Mml.prog)
+# 113 "mmlparser.ml"
+    )) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 42 "mmlparser.mly"
+                         e2
+# 118 "mmlparser.ml"
+   : 'tv_expression) (_startpos_e2_ : Lexing.position) (_endpos_e2_ : Lexing.position) (_startofs_e2_ : int) (_endofs_e2_ : int) (_loc_e2_ : Lexing.position * Lexing.position) (
+# 42 "mmlparser.mly"
+                op
+# 122 "mmlparser.ml"
+   : 'tv_binop) (_startpos_op_ : Lexing.position) (_endpos_op_ : Lexing.position) (_startofs_op_ : int) (_endofs_op_ : int) (_loc_op_ : Lexing.position * Lexing.position) (
+# 42 "mmlparser.mly"
+  e1
+# 126 "mmlparser.ml"
+   : 'tv_expression) (_startpos_e1_ : Lexing.position) (_endpos_e1_ : Lexing.position) (_startofs_e1_ : int) (_endofs_e1_ : int) (_loc_e1_ : Lexing.position * Lexing.position) ->
+    (
+# 42 "mmlparser.mly"
+                                       ( Bop(op, e1, e2) )
+# 131 "mmlparser.ml"
+     : 'tv_expression) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 41 "mmlparser.mly"
+  e
+# 136 "mmlparser.ml"
+   : 'tv_simple_expression) (_startpos_e_ : Lexing.position) (_endpos_e_ : Lexing.position) (_startofs_e_ : int) (_endofs_e_ : int) (_loc_e_ : Lexing.position * Lexing.position) ->
+    (
+# 41 "mmlparser.mly"
+                      ( e )
+# 141 "mmlparser.ml"
+     : 'tv_expression) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 47 "mmlparser.mly"
+ _1
+# 146 "mmlparser.ml"
+   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
+    (
+# 47 "mmlparser.mly"
+       ( Mul )
+# 151 "mmlparser.ml"
+     : 'tv_binop) in
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 46 "mmlparser.mly"
+ _1
+# 156 "mmlparser.ml"
+   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
+    (
+# 46 "mmlparser.mly"
+       ( Add )
+# 161 "mmlparser.ml"
+     : 'tv_binop) in
+  ((let rec diverge() = diverge() in diverge()) : 'tv_simple_expression * 'tv_program * 'tv_expression * 'tv_binop)
 
-let _menhir_print_token : token -> string =
-  fun _tok ->
-    match _tok with
-    | CST _ ->
-        "CST"
-    | EOF ->
-        "EOF"
-    | IDENT _ ->
-        "IDENT"
-    | PLUS ->
-        "PLUS"
-    | STAR ->
-        "STAR"
-
-let _menhir_fail : unit -> 'a =
-  fun () ->
-    Printf.eprintf "Internal failure -- please contact the parser generator's developers.\n%!";
-    assert false
-
-include struct
-  
-  [@@@ocaml.warning "-4-37-39"]
-  
-  let rec _menhir_run_04 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
-      match (_tok : MenhirBasics.token) with
-      | STAR ->
-          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v) in
-          _menhir_run_05 _menhir_stack _menhir_lexbuf _menhir_lexer
-      | PLUS ->
-          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v) in
-          let _tok = _menhir_lexer _menhir_lexbuf in
-          (match (_tok : MenhirBasics.token) with
-          | CST _v_0 ->
-              let _tok = _menhir_lexer _menhir_lexbuf in
-              let _v_1 =
-                let n = _v_0 in
-                _menhir_action_5 n
-              in
-              let e = _v_1 in
-              let _v = _menhir_action_1 e in
-              _menhir_run_08 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState07 _tok
-          | _ ->
-              _eRR ())
-      | EOF ->
-          let code = _v in
-          let _v = _menhir_action_4 code in
-          MenhirBox_program _v
-      | _ ->
-          _eRR ()
-  
-  and _menhir_run_05 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
-      let _tok = _menhir_lexer _menhir_lexbuf in
-      match (_tok : MenhirBasics.token) with
-      | CST _v ->
-          let _tok = _menhir_lexer _menhir_lexbuf in
-          let _v =
-            let n = _v in
-            _menhir_action_5 n
-          in
-          let e = _v in
-          let _v = _menhir_action_1 e in
-          _menhir_run_06 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
-      | _ ->
-          _eRR ()
-  
-  and _menhir_run_06 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _ -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
-      let MenhirCell1_expression (_menhir_stack, _menhir_s, e1) = _menhir_stack in
-      let e2 = _v in
-      let _v = _menhir_action_3 e1 e2 in
-      _menhir_goto_expression _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
-  
-  and _menhir_goto_expression : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
-      match _menhir_s with
-      | MenhirState07 ->
-          _menhir_run_08 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
-      | MenhirState05 ->
-          _menhir_run_06 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
-      | MenhirState00 ->
-          _menhir_run_04 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
-  
-  and _menhir_run_08 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_expression as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
-      match (_tok : MenhirBasics.token) with
-      | STAR ->
-          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v) in
-          _menhir_run_05 _menhir_stack _menhir_lexbuf _menhir_lexer
-      | EOF | PLUS ->
-          let MenhirCell1_expression (_menhir_stack, _menhir_s, e1) = _menhir_stack in
-          let e2 = _v in
-          let _v = _menhir_action_2 e1 e2 in
-          _menhir_goto_expression _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
-      | _ ->
-          _eRR ()
-  
-  let rec _menhir_run_00 : type  ttv_stack. ttv_stack -> _ -> _ -> _menhir_box_program =
-    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
-      let _tok = _menhir_lexer _menhir_lexbuf in
-      match (_tok : MenhirBasics.token) with
-      | CST _v ->
-          let _tok = _menhir_lexer _menhir_lexbuf in
-          let _v =
-            let n = _v in
-            _menhir_action_5 n
-          in
-          let e = _v in
-          let _v = _menhir_action_1 e in
-          _menhir_run_04 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState00 _tok
-      | _ ->
-          _eRR ()
-  
-end
-
-let program =
-  fun _menhir_lexer _menhir_lexbuf ->
-    let _menhir_stack = () in
-    let MenhirBox_program v = _menhir_run_00 _menhir_stack _menhir_lexbuf _menhir_lexer in
-    v
+and menhir_end_marker =
+  0
