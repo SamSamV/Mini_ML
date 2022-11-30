@@ -76,6 +76,12 @@ rule token = parse
         {IN}
   | ident as x
       {IDENT(x)}
+  | "not"
+        {NOT}
+  | "->"
+        {RARROW}
+  | "<-"
+        {LARROW}
   | _
       { raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) }
   | eof

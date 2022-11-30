@@ -25,6 +25,9 @@
 %token LT
 %token NEQ
 %token OR
+%token NOT
+%token LARROW RARROW
+
 %left MINUS
 %left PLUS
 %left DIV
@@ -48,10 +51,13 @@ simple_expression:
 expression:
 | e=simple_expression { e }
 | e1=expression op=binop e2=expression { Bop(op, e1, e2) }
+| op=unop e=simple_expression {Uop(op, e)}
+| e1=expression e2=simple_expression { App(e1, e2)}
 | LPAR; e=expression; RPAR { e }
 | IF; e1=expression; THEN; e2=expression; ELSE; e3=expression {If(e1,e2,e3)}
 | IF; e1=expression; THEN; e2=expression {If(e1,e2,Unit)}
 | LET; x=IDENT; EQONLY; e1=expression; IN; e2=expression {Let(x,e1,e2)}
+| FUN; x=IDENT; RARROW; e=expression {Fun(x, ,e)}
 ;
 
 %inline binop:
@@ -66,5 +72,9 @@ expression:
 | OR {Or}
 | AND {And}
 | MOD {Mod}
+
+%inline unop:
+| NOT { Not }
+| MINUS { Neg }
 ;
 

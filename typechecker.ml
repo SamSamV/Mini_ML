@@ -23,8 +23,15 @@ let type_prog prog =
   (* Calcule le type de l'expression [e] *)
   and type_expr e tenv = match e with
     | Int _  -> TInt
-    | Bop((Add | Mul | Sub), e1, e2) -> 
-       check e1 TInt tenv; check e2 TInt tenv; TInt
+    | Var(x) -> SymTbl.find x tenv
+    | Bop((Add | Mul | Sub | Div | Mod ), e1, e2) -> 
+        check e1 TInt tenv; check e2 TInt tenv; TInt
+    | Let(x, e1, e2) -> 
+        let t1 = type_expr e1 tenv in type_expr e2 (Env.add x t1 tenv)
+    (*
+    | App(f, a) ->
+        check f TFun tenv; check a TUnit tenv; type_expr a tenv
+        *)
 
   in
 
