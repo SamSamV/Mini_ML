@@ -41,6 +41,8 @@ let eval_prog (p: prog): value =
     | Int n  -> VInt n
     | Bop(Add, e1, e2) -> VInt (evali e1 env + evali e2 env)
     | Bop(Mul, e1, e2) -> VInt (evali e1 env * evali e2 env)
+    | Bop(Sub, e1, e2) -> VInt (evali e1 env - evali e2 env)
+    (*| If(e1,e2,e3) -> VUn*)
 
   (* Évaluation d'une expression dont la valeur est supposée entière *)
   and evali (e: expr) (env: value Env.t): int = 

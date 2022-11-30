@@ -5,19 +5,25 @@
 
   exception Lexing_error of string
 
-  let keyword_or_ident =
+  (*let keyword_or_ident =
     let h = Hashtbl.create 17 in
     List.iter (fun (s, k) -> Hashtbl.add h s k)
-      [ (* À compléter *)
+      [ " fun " , FUN ;
+        " let " , LET ;
+        " rec " , REC ;
+        " in " , IN ;
+        " if " , IF ;
+        " then " , THEN ;
+        " else " , ELSE ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
-      with Not_found -> IDENT(s)
+      with Not_found -> IDENT(s) *)
         
 }
 
 let digit = ['0'-'9']
-let number = digit+
+let number = '-'? digit+
 let alpha = ['a'-'z' 'A'-'Z']
 let ident = ['a'-'z' '_'] (alpha | '_' | digit)*
   
@@ -29,11 +35,47 @@ rule token = parse
   | "(*" 
       { comment lexbuf; token lexbuf }
   | number as n
-      { CST(int_of_string n) }
+      { CST( int_of_string n) }
   | "+"
       { PLUS }
   | "*"
       { STAR }
+  | "-"
+      { MINUS }
+  | "("
+      { LPAR }
+  | ")"
+      { RPAR }
+  | "if"
+      { IF }
+  | "then"
+      { THEN }
+  | "else"
+      { ELSE }
+  | "=="
+      {EQUALS}
+  | "="
+      {EQONLY}
+  | "/"
+      {DIV}
+  | "mod"
+        {MOD}
+  | "&&"
+        {AND}
+  | "<="
+        {LE}
+  | "<"
+        {LT}
+  | "!="
+        {NEQ}
+  | "|"
+        {OR}
+  | "let"
+        {LET}
+  | "in"
+        {IN}
+  | ident as x
+      {IDENT(x)}
   | _
       { raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) }
   | eof

@@ -1,1 +1,1 @@
-mmllexer.ml: Hashtbl Lexing List Mmlparser
+mmllexer.ml: Lexing Mmlparser
