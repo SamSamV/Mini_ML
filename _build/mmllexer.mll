@@ -5,7 +5,7 @@
 
   exception Lexing_error of string
 
-  (*let keyword_or_ident =
+  let keyword_or_ident =
     let h = Hashtbl.create 17 in
     List.iter (fun (s, k) -> Hashtbl.add h s k)
       [ " fun " , FUN ;
@@ -18,7 +18,7 @@
       ] ;
     fun s ->
       try  Hashtbl.find h s
-      with Not_found -> IDENT(s) *)
+      with Not_found -> IDENT(s) 
         
 }
 
@@ -36,6 +36,10 @@ rule token = parse
       { comment lexbuf; token lexbuf }
   | number as n
       { CST( int_of_string n) }
+  | "true"
+      { TRUE }
+  |"false"
+      {FALSE}
   | "+"
       { PLUS }
   | "*"
@@ -46,12 +50,6 @@ rule token = parse
       { LPAR }
   | ")"
       { RPAR }
-  | "if"
-      { IF }
-  | "then"
-      { THEN }
-  | "else"
-      { ELSE }
   | "=="
       {EQUALS}
   | "="
@@ -70,12 +68,14 @@ rule token = parse
         {NEQ}
   | "|"
         {OR}
-  | "let"
-        {LET}
-  | "in"
-        {IN}
   | ident as x
       {IDENT(x)}
+  | "not"
+        {NOT}
+  | "->"
+        {RARROW}
+  | "<-"
+        {LARROW}
   | _
       { raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) }
   | eof

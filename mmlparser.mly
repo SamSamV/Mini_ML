@@ -17,6 +17,7 @@
 %token EQONLY
 %token LET
 %token IN
+%token FUN
 //%token FUN LET REC IN IF THEN ELSE
 %token EOF
 %token MOD 
@@ -27,6 +28,7 @@
 %token OR
 %token NOT
 %token LARROW RARROW
+%token TRUE FALSE
 
 %left MINUS
 %left PLUS
@@ -46,6 +48,8 @@ program:
 simple_expression:
 | n=CST { Int(n) }
 | x=IDENT { Var(x)}
+| b=TRUE {Bool(b)}
+| b=FALSE {Bool(b)}
 ;
 
 expression:
