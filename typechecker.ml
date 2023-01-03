@@ -31,9 +31,9 @@ let type_prog prog =
     | Uop (Not, e) -> check e TBool tenv; TBool
     | Let(x, e1, e2) -> 
         let t1 = type_expr e1 tenv in type_expr e2 (Env.add x t1 tenv)
-    | App(f, a) ->
-        check f (type_expr f tenv) tenv; check a TUnit tenv; type_expr a tenv
-        
+    | Fun(x, tx, e) -> 
+        let te = type_expr e (Env.add x tx env) in
+        TFun(tx, te)
 
   in
 

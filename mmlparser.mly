@@ -8,6 +8,7 @@
 %token PLUS STAR MINUS DIV
 %token <int> CST
 %token <string> IDENT
+%token UNIT
 %token LPAR
 %token RPAR
 %token IF
@@ -18,7 +19,6 @@
 %token LET
 %token IN
 %token FUN
-//%token FUN LET REC IN IF THEN ELSE
 %token EOF
 %token MOD 
 %token AND 
@@ -28,7 +28,13 @@
 %token OR
 %token NOT
 %token LARROW RARROW
+%token LACC RACC
 %token TRUE FALSE
+%token TWODOT DOT DOTVIRG
+
+//%token COLON
+%token INT_TYPE BOOL_TYPE UNIT_TYPE 
+
 
 %left MINUS
 %left PLUS
@@ -48,8 +54,12 @@ program:
 simple_expression:
 | n=CST { Int(n) }
 | x=IDENT { Var(x)}
-| b=TRUE {Bool(b)}
-| b=FALSE {Bool(b)}
+| TRUE { Bool(true) }
+| FALSE { Bool(false) }
+| UNIT {Unit}
+| se=simple_expression; DOT; x=IDENT { GetF(se, x) } 
+| LACC; [x=IDENT; EQONLY; e=expression; DOTVIRG]+; RACC { Strct(x,e) }
+| LPAR; e=expression; RPAR { e }
 ;
 
 expression:
@@ -57,11 +67,18 @@ expression:
 | e1=expression op=binop e2=expression { Bop(op, e1, e2) }
 | op=unop e=simple_expression {Uop(op, e)}
 | e1=expression e2=simple_expression { App(e1, e2)}
-| LPAR; e=expression; RPAR { e }
 | IF; e1=expression; THEN; e2=expression; ELSE; e3=expression {If(e1,e2,e3)}
 | IF; e1=expression; THEN; e2=expression {If(e1,e2,Unit)}
-| LET; x=IDENT; EQONLY; e1=expression; IN; e2=expression {Let(x,e1,e2)}
-| FUN; x=IDENT; RARROW; e=expression {Fun(x, ,e)}
+| FUN; LPAR; x=IDENT; TWODOT; tx=typ; RPAR; RARROW; e=expression {Fun(x, tx, e)}
+| LET; x=IDENT; [LPAR; xx=ident; TWODOT; t=typ; RPAR]*; EQONLY; e1=expression; IN; e2=expression {Let(x,e1,e2)}
+|
+
+;
+
+typ:
+| INT_TYPE {TInt}
+| BOOL_TYPE {TBool}
+| UNIT_TYPE {TUnit}
 ;
 
 %inline binop:

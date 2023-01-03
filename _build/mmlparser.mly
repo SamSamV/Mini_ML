@@ -8,6 +8,7 @@
 %token PLUS STAR MINUS DIV
 %token <int> CST
 %token <string> IDENT
+%token UNIT
 %token LPAR
 %token RPAR
 %token IF
@@ -18,7 +19,6 @@
 %token LET
 %token IN
 %token FUN
-//%token FUN LET REC IN IF THEN ELSE
 %token EOF
 %token MOD 
 %token AND 
@@ -27,8 +27,14 @@
 %token NEQ
 %token OR
 %token NOT
-%token LARROW RARROW
+%token LARROW
+%token RARROW
 %token TRUE FALSE
+%token TWOPOINTS
+
+//%token COLON
+%token INT_TYPE BOOL_TYPE UNIT_TYPE 
+
 
 %left MINUS
 %left PLUS
@@ -48,8 +54,9 @@ program:
 simple_expression:
 | n=CST { Int(n) }
 | x=IDENT { Var(x)}
-| b=TRUE {Bool(b)}
-| b=FALSE {Bool(b)}
+| TRUE { Bool(true) }
+| FALSE { Bool(false) }
+| UNIT {Unit}
 ;
 
 expression:
@@ -61,8 +68,13 @@ expression:
 | IF; e1=expression; THEN; e2=expression; ELSE; e3=expression {If(e1,e2,e3)}
 | IF; e1=expression; THEN; e2=expression {If(e1,e2,Unit)}
 | LET; x=IDENT; EQONLY; e1=expression; IN; e2=expression {Let(x,e1,e2)}
-| FUN; x=IDENT; RARROW; e=expression {Fun(x, ,e)}
+| FUN; LPAR; x=IDENT; TWOPOINTS; tx=typ; RPAR; RARROW; e=expression {Fun(x, tx, e)}
 ;
+
+typ:
+| INT_TYPE {TInt}
+| BOOL_TYPE {TBool}
+| UNIT_TYPE {TUnit}
 
 %inline binop:
 | PLUS { Add }

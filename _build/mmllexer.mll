@@ -10,11 +10,11 @@
     List.iter (fun (s, k) -> Hashtbl.add h s k)
       [ " fun " , FUN ;
         " let " , LET ;
-        " rec " , REC ;
         " in " , IN ;
         " if " , IF ;
         " then " , THEN ;
         " else " , ELSE ;
+        (*        " rec " , REC ;*)
       ] ;
     fun s ->
       try  Hashtbl.find h s
@@ -26,7 +26,8 @@ let digit = ['0'-'9']
 let number = '-'? digit+
 let alpha = ['a'-'z' 'A'-'Z']
 let ident = ['a'-'z' '_'] (alpha | '_' | digit)*
-  
+let boolean = ("true" | "false")
+
 rule token = parse
   | ['\n']
       { new_line lexbuf; token lexbuf }
@@ -36,10 +37,14 @@ rule token = parse
       { comment lexbuf; token lexbuf }
   | number as n
       { CST( int_of_string n) }
+  | ident as i
+      { IDENT ( i )}
+  | "()"
+      { UNIT }
   | "true"
       { TRUE }
-  |"false"
-      {FALSE}
+  | "false"
+      { FALSE }
   | "+"
       { PLUS }
   | "*"
@@ -76,6 +81,8 @@ rule token = parse
         {RARROW}
   | "<-"
         {LARROW}
+  | ":"
+        {TWOPOINTS}
   | _
       { raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) }
   | eof
