@@ -38,7 +38,7 @@ rule token = parse
   | number as n
       { CST( int_of_string n) }
   | ident as i
-      { IDENT ( i )}
+      { IDENT (i)}
   | "()"
       { UNIT }
   | "true"
