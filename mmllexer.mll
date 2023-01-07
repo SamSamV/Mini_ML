@@ -8,13 +8,13 @@
   let keyword_or_ident =
     let h = Hashtbl.create 17 in
     List.iter (fun (s, k) -> Hashtbl.add h s k)
-      [ " fun " , FUN ;
-        " let " , LET ;
-        " in " , IN ;
-        " if " , IF ;
-        " then " , THEN ;
-        " else " , ELSE ;
-        (*        " rec " , REC ;*)
+      [ "fun" , FUN ;
+        "let" , LET ;
+        "in" , IN ;
+        "if" , IF ;
+        "then" , THEN ;
+        "else" , ELSE ;
+        "rec" , REC ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
@@ -38,7 +38,7 @@ rule token = parse
   | number as n
       { CST( int_of_string n) }
   | ident as i
-      { IDENT (i)}
+      { keyword_or_ident i }
   | "()"
       { UNIT }
   | "true"
@@ -73,8 +73,6 @@ rule token = parse
         {NEQ}
   | "|"
         {OR}
-  | ident as x
-      {IDENT(x)}
   | "not"
         {NOT}
   | "->"

@@ -17,6 +17,7 @@
 %token EQUALS
 %token EQONLY
 %token LET
+%token REC
 %token IN
 %token FUN
 %token EOF
@@ -58,7 +59,7 @@ simple_expression:
 | FALSE { Bool(false) }
 | UNIT {Unit}
 | se=simple_expression; DOT; x=IDENT { GetF(se, x) } 
-| LACC; [x=IDENT; EQONLY; e=expression; DOTVIRG]+; RACC { Strct(x,e) }
+//| LACC (x=IDENT EQONLY e=expression DOTVIRG)+ RACC { Strct(x,e) }
 | LPAR; e=expression; RPAR { e }
 ;
 
@@ -70,10 +71,12 @@ expression:
 | IF; e1=expression; THEN; e2=expression; ELSE; e3=expression {If(e1,e2,e3)}
 | IF; e1=expression; THEN; e2=expression {If(e1,e2,Unit)}
 | FUN; LPAR; x=IDENT; TWODOT; tx=typ; RPAR; RARROW; e=expression {Fun(x, tx, e)}
-| LET; x=IDENT; [LPAR; xx=ident; TWODOT; t=typ; RPAR]*; EQONLY; e1=expression; IN; e2=expression {Let(x,e1,e2)}
-|
-
+| LET x=IDENT list(arg_list) EQONLY e1=expression IN e2=expression {Let(x,e1,e2)}
+| LET REC f=IDENT list(arg_list) TWODOT t=typ EQONLY e1=expression IN e2=expression {Let("f", Fix("f", t, e1), e2)}
 ;
+
+arg_list:
+| LPAR xx=IDENT TWODOT t=typ RPAR { (xx, t)}
 
 typ:
 | INT_TYPE {TInt}
