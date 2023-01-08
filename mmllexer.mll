@@ -15,6 +15,13 @@
         "then" , THEN ;
         "else" , ELSE ;
         "rec" , REC ;
+        "int" , INT_TYPE ;
+        "bool", BOOL_TYPE ;
+        "unit", UNIT_TYPE ;
+        "true", TRUE ;
+        "false", FALSE ;
+        "not", NOT ;
+        "mod", MOD ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
@@ -41,10 +48,6 @@ rule token = parse
       { keyword_or_ident i }
   | "()"
       { UNIT }
-  | "true"
-      { TRUE }
-  | "false"
-      { FALSE }
   | "+"
       { PLUS }
   | "*"
@@ -61,8 +64,6 @@ rule token = parse
       {EQONLY}
   | "/"
       {DIV}
-  | "mod"
-        {MOD}
   | "&&"
         {AND}
   | "<="
@@ -71,10 +72,8 @@ rule token = parse
         {LT}
   | "!="
         {NEQ}
-  | "|"
+  | "||"
         {OR}
-  | "not"
-        {NOT}
   | "->"
         {RARROW}
   | "<-"

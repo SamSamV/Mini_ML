@@ -4,12 +4,14 @@
 type token = 
   | UNIT_TYPE
   | UNIT
-  | TWOPOINTS
+  | TWODOT
   | TRUE
   | THEN
   | STAR
   | RPAR
+  | REC
   | RARROW
+  | RACC
   | PLUS
   | OR
   | NOT
@@ -21,6 +23,7 @@ type token =
   | LET
   | LE
   | LARROW
+  | LACC
   | INT_TYPE
   | IN
   | IF
@@ -31,6 +34,8 @@ type token =
   | EQONLY
   | EOF
   | ELSE
+  | DOTVIRG
+  | DOT
   | DIV
   | CST of (int)
   | BOOL_TYPE

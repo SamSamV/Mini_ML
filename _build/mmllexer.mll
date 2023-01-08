@@ -8,13 +8,20 @@
   let keyword_or_ident =
     let h = Hashtbl.create 17 in
     List.iter (fun (s, k) -> Hashtbl.add h s k)
-      [ " fun " , FUN ;
-        " let " , LET ;
-        " in " , IN ;
-        " if " , IF ;
-        " then " , THEN ;
-        " else " , ELSE ;
-        (*        " rec " , REC ;*)
+      [ "fun" , FUN ;
+        "let" , LET ;
+        "in" , IN ;
+        "if" , IF ;
+        "then" , THEN ;
+        "else" , ELSE ;
+        "rec" , REC ;
+        "int" , INT_TYPE ;
+        "bool", BOOL_TYPE ;
+        "unit", UNIT_TYPE ;
+        "true", TRUE ;
+        "false", FALSE ;
+        "not", NOT ;
+        "mod", MOD ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
@@ -38,13 +45,9 @@ rule token = parse
   | number as n
       { CST( int_of_string n) }
   | ident as i
-      { IDENT (i)}
+      { keyword_or_ident i }
   | "()"
       { UNIT }
-  | "true"
-      { TRUE }
-  | "false"
-      { FALSE }
   | "+"
       { PLUS }
   | "*"
@@ -61,8 +64,6 @@ rule token = parse
       {EQONLY}
   | "/"
       {DIV}
-  | "mod"
-        {MOD}
   | "&&"
         {AND}
   | "<="
@@ -71,12 +72,8 @@ rule token = parse
         {LT}
   | "!="
         {NEQ}
-  | "|"
+  | "||"
         {OR}
-  | ident as x
-      {IDENT(x)}
-  | "not"
-        {NOT}
   | "->"
         {RARROW}
   | "<-"

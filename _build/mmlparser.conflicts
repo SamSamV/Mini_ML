@@ -1,10 +1,10 @@
 
-** Conflict (shift/reduce) in state 57.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 80.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
-LET IDENT EQONLY expression IN expression
+LET IDENT list(let_arglist) EQONLY expression IN expression
 
 ** The derivations that appear below have the following common factor:
 ** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
@@ -13,22 +13,50 @@ program
 expression EOF 
 (?)
 
-** In state 57, looking ahead at UNIT, reducing production
-** expression -> LET IDENT EQONLY expression IN expression
+** In state 80, looking ahead at UNIT, reducing production
+** expression -> LET IDENT list(let_arglist) EQONLY expression IN expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
-LET IDENT EQONLY expression IN expression . 
+LET IDENT list(let_arglist) EQONLY expression IN expression . 
 
-** In state 57, looking ahead at UNIT, shifting is permitted
+** In state 80, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
-LET IDENT EQONLY expression IN expression 
-                               expression simple_expression 
-                                          . UNIT 
+LET IDENT list(let_arglist) EQONLY expression IN expression 
+                                                 expression simple_expression 
+                                                            . UNIT 
 
-** Conflict (shift/reduce) in state 54.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 72.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
+** The following explanations concentrate on token UNIT.
+** This state is reached from program after reading:
+
+LET REC IDENT list(let_arglist) TWODOT typ EQONLY expression IN expression
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+program 
+expression EOF 
+(?)
+
+** In state 72, looking ahead at UNIT, reducing production
+** expression -> LET REC IDENT list(let_arglist) TWODOT typ EQONLY expression IN expression
+** is permitted because of the following sub-derivation:
+
+expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
+LET REC IDENT list(let_arglist) TWODOT typ EQONLY expression IN expression . 
+
+** In state 72, looking ahead at UNIT, shifting is permitted
+** because of the following sub-derivation:
+
+LET REC IDENT list(let_arglist) TWODOT typ EQONLY expression IN expression 
+                                                                expression simple_expression 
+                                                                           . UNIT 
+
+** Conflict (shift/reduce) in state 69.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -41,22 +69,22 @@ program
 expression EOF 
 (?)
 
-** In state 54, looking ahead at UNIT, reducing production
+** In state 69, looking ahead at UNIT, reducing production
 ** expression -> IF expression THEN expression ELSE expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 IF expression THEN expression ELSE expression . 
 
-** In state 54, looking ahead at UNIT, shifting is permitted
+** In state 69, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 IF expression THEN expression ELSE expression 
                                    expression simple_expression 
                                               . UNIT 
 
-** Conflict (shift/reduce) in state 52.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS ELSE DIV CST AND
+** Conflict (shift/reduce) in state 67.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS ELSE DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -69,22 +97,22 @@ program
 expression EOF 
 (?)
 
-** In state 52, looking ahead at UNIT, reducing production
+** In state 67, looking ahead at UNIT, reducing production
 ** expression -> IF expression THEN expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 IF expression THEN expression . 
 
-** In state 52, looking ahead at UNIT, shifting is permitted
+** In state 67, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 IF expression THEN expression ELSE expression 
                    expression simple_expression 
                               . UNIT 
 
-** Conflict (shift/reduce) in state 48.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 63.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -97,22 +125,22 @@ program
 expression EOF 
 (?)
 
-** In state 48, looking ahead at UNIT, reducing production
+** In state 63, looking ahead at UNIT, reducing production
 ** expression -> expression AND expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression AND expression . 
 
-** In state 48, looking ahead at UNIT, shifting is permitted
+** In state 63, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression AND expression 
                expression simple_expression 
                           . UNIT 
 
-** Conflict (shift/reduce) in state 46.
-** Tokens involved: UNIT TRUE OR NEQ MOD LT LE IDENT FALSE EQUALS CST AND
+** Conflict (shift/reduce) in state 61.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -125,22 +153,22 @@ program
 expression EOF 
 (?)
 
-** In state 46, looking ahead at UNIT, reducing production
+** In state 61, looking ahead at UNIT, reducing production
 ** expression -> expression DIV expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression DIV expression . 
 
-** In state 46, looking ahead at UNIT, shifting is permitted
+** In state 61, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression DIV expression 
                expression simple_expression 
                           . UNIT 
 
-** Conflict (shift/reduce) in state 44.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 59.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -153,22 +181,22 @@ program
 expression EOF 
 (?)
 
-** In state 44, looking ahead at UNIT, reducing production
+** In state 59, looking ahead at UNIT, reducing production
 ** expression -> expression EQUALS expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression EQUALS expression . 
 
-** In state 44, looking ahead at UNIT, shifting is permitted
+** In state 59, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression EQUALS expression 
                   expression simple_expression 
                              . UNIT 
 
-** Conflict (shift/reduce) in state 42.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 57.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -181,22 +209,22 @@ program
 expression EOF 
 (?)
 
-** In state 42, looking ahead at UNIT, reducing production
+** In state 57, looking ahead at UNIT, reducing production
 ** expression -> expression LE expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression LE expression . 
 
-** In state 42, looking ahead at UNIT, shifting is permitted
+** In state 57, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression LE expression 
               expression simple_expression 
                          . UNIT 
 
-** Conflict (shift/reduce) in state 40.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 55.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -209,22 +237,22 @@ program
 expression EOF 
 (?)
 
-** In state 40, looking ahead at UNIT, reducing production
+** In state 55, looking ahead at UNIT, reducing production
 ** expression -> expression LT expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression LT expression . 
 
-** In state 40, looking ahead at UNIT, shifting is permitted
+** In state 55, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression LT expression 
               expression simple_expression 
                          . UNIT 
 
-** Conflict (shift/reduce) in state 38.
-** Tokens involved: UNIT TRUE OR NEQ MOD LT LE IDENT FALSE EQUALS CST AND
+** Conflict (shift/reduce) in state 53.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -237,22 +265,22 @@ program
 expression EOF 
 (?)
 
-** In state 38, looking ahead at UNIT, reducing production
+** In state 53, looking ahead at UNIT, reducing production
 ** expression -> expression MINUS expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression MINUS expression . 
 
-** In state 38, looking ahead at UNIT, shifting is permitted
+** In state 53, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression MINUS expression 
                  expression simple_expression 
                             . UNIT 
 
-** Conflict (shift/reduce) in state 36.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 51.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -265,22 +293,22 @@ program
 expression EOF 
 (?)
 
-** In state 36, looking ahead at UNIT, reducing production
+** In state 51, looking ahead at UNIT, reducing production
 ** expression -> expression MOD expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression MOD expression . 
 
-** In state 36, looking ahead at UNIT, shifting is permitted
+** In state 51, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression MOD expression 
                expression simple_expression 
                           . UNIT 
 
-** Conflict (shift/reduce) in state 34.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 49.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -293,22 +321,22 @@ program
 expression EOF 
 (?)
 
-** In state 34, looking ahead at UNIT, reducing production
+** In state 49, looking ahead at UNIT, reducing production
 ** expression -> expression NEQ expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression NEQ expression . 
 
-** In state 34, looking ahead at UNIT, shifting is permitted
+** In state 49, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression NEQ expression 
                expression simple_expression 
                           . UNIT 
 
-** Conflict (shift/reduce) in state 32.
-** Tokens involved: UNIT TRUE OR NEQ MOD LT LE IDENT FALSE EQUALS CST AND
+** Conflict (shift/reduce) in state 47.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -321,22 +349,22 @@ program
 expression EOF 
 (?)
 
-** In state 32, looking ahead at UNIT, reducing production
+** In state 47, looking ahead at UNIT, reducing production
 ** expression -> expression PLUS expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression PLUS expression . 
 
-** In state 32, looking ahead at UNIT, shifting is permitted
+** In state 47, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression PLUS expression 
                 expression simple_expression 
                            . UNIT 
 
-** Conflict (shift/reduce) in state 30.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 45.
+** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LPAR LE IDENT FALSE EQUALS DIV CST AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -349,22 +377,22 @@ program
 expression EOF 
 (?)
 
-** In state 30, looking ahead at UNIT, reducing production
+** In state 45, looking ahead at UNIT, reducing production
 ** expression -> expression OR expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression OR expression . 
 
-** In state 30, looking ahead at UNIT, shifting is permitted
+** In state 45, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression OR expression 
               expression simple_expression 
                          . UNIT 
 
-** Conflict (shift/reduce) in state 28.
-** Tokens involved: UNIT TRUE OR NEQ MOD LT LE IDENT FALSE EQUALS CST AND
+** Conflict (shift/reduce) in state 43.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
@@ -377,26 +405,26 @@ program
 expression EOF 
 (?)
 
-** In state 28, looking ahead at UNIT, reducing production
+** In state 43, looking ahead at UNIT, reducing production
 ** expression -> expression STAR expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
 expression STAR expression . 
 
-** In state 28, looking ahead at UNIT, shifting is permitted
+** In state 43, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
 expression STAR expression 
                 expression simple_expression 
                            . UNIT 
 
-** Conflict (shift/reduce) in state 26.
-** Tokens involved: UNIT TRUE STAR PLUS OR NEQ MOD MINUS LT LE IDENT FALSE EQUALS DIV CST AND
+** Conflict (shift/reduce) in state 41.
+** Tokens involved: UNIT TRUE OR NEQ MOD LT LE FALSE EQUALS AND
 ** The following explanations concentrate on token UNIT.
 ** This state is reached from program after reading:
 
-FUN LPAR IDENT TWOPOINTS typ RPAR RARROW expression
+FUN LPAR IDENT TWODOT typ RPAR RARROW expression
 
 ** The derivations that appear below have the following common factor:
 ** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
@@ -405,16 +433,16 @@ program
 expression EOF 
 (?)
 
-** In state 26, looking ahead at UNIT, reducing production
-** expression -> FUN LPAR IDENT TWOPOINTS typ RPAR RARROW expression
+** In state 41, looking ahead at UNIT, reducing production
+** expression -> FUN LPAR IDENT TWODOT typ RPAR RARROW expression
 ** is permitted because of the following sub-derivation:
 
 expression simple_expression // lookahead token appears because simple_expression can begin with UNIT
-FUN LPAR IDENT TWOPOINTS typ RPAR RARROW expression . 
+FUN LPAR IDENT TWODOT typ RPAR RARROW expression . 
 
-** In state 26, looking ahead at UNIT, shifting is permitted
+** In state 41, looking ahead at UNIT, shifting is permitted
 ** because of the following sub-derivation:
 
-FUN LPAR IDENT TWOPOINTS typ RPAR RARROW expression 
-                                         expression simple_expression 
-                                                    . UNIT 
+FUN LPAR IDENT TWODOT typ RPAR RARROW expression 
+                                      expression simple_expression 
+                                                 . UNIT 
