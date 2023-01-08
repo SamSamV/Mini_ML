@@ -32,16 +32,15 @@
 %token LACC RACC
 %token TRUE FALSE
 %token TWODOT DOT DOTVIRG
-
-//%token COLON
+%token TYPE MUTABLE
 %token INT_TYPE BOOL_TYPE UNIT_TYPE 
 
 
 %nonassoc IN ELSE RARROW
-%left EQUAL
+%left AND OR
+%left EQUALS LE LT
 %left PLUS MINUS
-%left DIV
-%left STAR
+%left STAR DIV
 %left LPAR IDENT CST
 
 
@@ -51,11 +50,11 @@
 %%
 
 program:
-| (* à compléter *) code=expression EOF { {types=[]; code} }
+| t=list(type_def) code=expression EOF { {types=[]; code} }
 ;
 
-let_arglist:
-| LPAR xx=IDENT TWODOT t=typ RPAR { (xx, t) }
+type_def:
+| TYPE x=IDENT EQONLY LACC y1=type_def_arglist y2=list(type_def_arglist) RACC { (x, y1::y2) }
 ;
 
 typ:
@@ -64,17 +63,6 @@ typ:
 | UNIT_TYPE {TUnit}
 | t1=typ RARROW t2=typ {TFun(t1,t2)}
 | LPAR t=typ RPAR {t}
-;
-
-simple_expression:
-| n=CST { Int(n) }
-| x=IDENT { Var(x)}
-| TRUE { Bool(true) }
-| FALSE { Bool(false) }
-| UNIT {Unit}
-| se=simple_expression DOT x=IDENT { GetF(se, x) } 
-//| LACC (x=IDENT EQONLY e=expression DOTVIRG)+ RACC { Strct(x,e) }
-| LPAR e=expression RPAR { e }
 ;
 
 expression:
@@ -86,9 +74,37 @@ expression:
 | IF e1=expression THEN e2=expression {If(e1,e2,Unit)}
 | FUN LPAR x=IDENT TWODOT tx=typ RPAR RARROW e=expression {Fun(x, tx, e)}
 | LET x=IDENT t0=list(let_arglist) EQONLY e1=expression IN e2=expression { Let(x,mk_fun t0 e1,e2) }
-| LET REC f=IDENT t0=list(let_arglist) TWODOT t1=typ EQONLY e1=expression IN e2=expression { Let(f,Fix(f,(mk_fun_type t0 t1),(mk_fun t0 e1)),e2) }
+| LET REC f=IDENT t0=list(let_arglist) t1=fun_typ EQONLY e1=expression IN e2=expression { Let(f,Fix(f,(mk_fun_type t0 t1),(mk_fun t0 e1)),e2) }
 | e1=simple_expression DOT x=IDENT LARROW e2=expression {SetF (e1, x, e2)}
-| e1=expression DOTVIRG e2=expression {Seq (e1, e2)}
+| e1=expression DOTVIRG e2=expression {Seq(e1, e2)}
+;
+
+simple_expression:
+| n=CST { Int(n) }
+| x=IDENT { Var(x)}
+| TRUE { Bool(true) }
+| FALSE { Bool(false) }
+| UNIT {Unit}
+| se=simple_expression DOT x=IDENT { GetF(se, x) } 
+| LACC x=strct_arglist y=list(strct_arglist) RACC { Strct(x::y) }
+| LPAR e=expression RPAR { e }
+;
+
+type_def_arglist:
+| x=IDENT TWODOT t=typ DOTVIRG {(x,t)}
+| MUTABLE x=IDENT TWODOT t=typ DOTVIRG {(x,t)}
+;
+
+fun_typ:
+| TWODOT t=typ {t}
+;
+
+let_arglist:
+| LPAR xx=IDENT TWODOT t=typ RPAR { (xx, t) }
+;
+
+strct_arglist:
+|  x=IDENT EQONLY e1=expression DOTVIRG {(x,e1)}
 ;
 
 %inline binop:

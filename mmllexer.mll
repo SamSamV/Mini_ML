@@ -22,6 +22,8 @@
         "false", FALSE ;
         "not", NOT ;
         "mod", MOD ;
+        "type", TYPE ;
+        "mutable", MUTABLE ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
@@ -33,7 +35,6 @@ let digit = ['0'-'9']
 let number = '-'? digit+
 let alpha = ['a'-'z' 'A'-'Z']
 let ident = ['a'-'z' '_'] (alpha | '_' | digit)*
-let boolean = ("true" | "false")
 
 rule token = parse
   | ['\n']

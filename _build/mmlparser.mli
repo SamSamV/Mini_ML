@@ -4,6 +4,7 @@
 type token = 
   | UNIT_TYPE
   | UNIT
+  | TYPE
   | TWODOT
   | TRUE
   | THEN
@@ -16,6 +17,7 @@ type token =
   | OR
   | NOT
   | NEQ
+  | MUTABLE
   | MOD
   | MINUS
   | LT

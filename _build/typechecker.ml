@@ -38,36 +38,36 @@ let type_prog prog =
         check e1 TBool tenv; check e2 TBool tenv; TBool
     | Uop (Neg, e) -> check e TInt tenv; TInt
     | Uop (Not, e) -> check e TBool tenv; TBool
-    | Let(x, e1, e2) -> 
-        let t1 = type_expr e1 tenv in type_expr e2 (SymTbl.add x t1 tenv)
+    | Let(x, e1, e2) ->
+        let t1 = type_expr e1 tenv in 
+        type_expr e2 (SymTbl.add x t1 tenv)
+    | If(e0, e1, e2) ->
+            let t0 = type_expr e0 tenv in 
+            let t1 = type_expr e1 tenv in
+            let t2 = type_expr e2 tenv in 
+            if t0 = TBool && t1 = t2 then t1 
+            else if t0 = TBool && t2 = TUnit then t1
+            else failwith "Error: Not a valid If"
     | Fun(x, tx, e) -> 
         let te = type_expr e (SymTbl.add x tx tenv) in
         TFun(tx, te)
-    | If(e0, e1, e2) ->
-        let t0 = type_expr e0 tenv in 
-        let t1 = type_expr e1 tenv in
-        let t2 = type_expr e2 tenv in 
-        if t0 = TBool && t1 = t2 then t1 
-        else if t0 = TBool && t2 = TUnit then t1
-        else failwith "type error1"
     | App(f, a) ->
             let tf = type_expr f tenv in
             let ta = type_expr a tenv in
             begin match tf with
             | TFun(tx, te) ->
                   if tx = ta then te 
-                  else failwith "type error2"
-            | _ -> failwith "type error3"
+                  else failwith "Error: Your input is not well typed"
+            | _ -> failwith "Error: Not a function" 
             end
-   | Fix(x,t1,e) ->
+    | Fix(x,t1,e) ->
           let te = type_expr e (SymTbl.add x t1 tenv) in
           te
-   | Seq(e1, e2) ->
-          let t1 = type_expr e1 tenv in
-          let t2 = type_expr e2 tenv in 
-          begin match t1 with
-          | TUnit -> t2
-          | _ -> failwith "e1 not Unit" 
+    | Seq(e1, e2) ->
+        begin
+            match type_expr e1 tenv with
+            | TUnit -> type_expr e2 tenv
+            | _ -> failwith "First exp in Seq need Unit"
           end
   in
 

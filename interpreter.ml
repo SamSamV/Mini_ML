@@ -1,5 +1,3 @@
-Interprète Mini-ML
-
 open Mml
 
 (* Environnement : associe des valeurs à des noms de variables *)
@@ -66,20 +64,31 @@ let eval_prog (p: prog): value =
       let v1 = eval e1 env in
         let env2 = Env.add x v1 env in
         eval e2 env2
-    | Fun(x, _, e) -> 
+    | Fun(x, t, e) -> 
       let n = new_ptr() in
         Hashtbl.add mem n (VClos(x,e,env));
         VPtr(n)
+
     | Fix(f, x, e1) -> 
-      let adr = new_ptr() in
-        Hashtbl.add mem adr(VClos(f,e1,env));
-        VPtr(adr)
+          let adr = new_ptr() in
+            Hashtbl.add mem adr(VClos(f,e1,Env.add f (VPtr(adr)) env));
+            VPtr(adr)
+    (* | Fix(f, _, e) -> 
+        match e with
+        | Fun(x,_,e2) -> let n = new_ptr() in Hashtbl.add mem n (VClos(x,e2,(Env.add f (VPtr(n)) env))); VPtr(n)
+        | _ -> assert false  *)
     | App (f , a) -> 
-      (match eval f env with
-        | VPtr(n) -> ( let v=Hashtbl.find mem n in
-                        match v with VClos (x, b, env') -> let va = eval a env in
-                        eval b (Env.add x va env')
-        | _ -> assert false))
+          (match eval f env with
+            | VPtr(n) -> ( let v=Hashtbl.find mem n in
+                            match v with VClos (x, b, env') -> let va = eval a env in
+                            eval b (Env.add x va env')
+            | _ -> assert false))
+        
+    | Seq(e1, e2) -> let t1 = eval e1 env in 
+            let t2 = eval e2 env in
+            match t1 with
+            | VUnit -> t2
+            | _ -> assert false 
     
   (* Évaluation d'une expression dont la valeur est supposée entière *)
   and evali (e: expr) (env: value Env.t): int = 

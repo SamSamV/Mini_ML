@@ -23,13 +23,15 @@
         "false", FALSE ;
         "not", NOT ;
         "mod", MOD ;
+        "type", TYPE ;
+        "mutable", MUTABLE ;
       ] ;
     fun s ->
       try  Hashtbl.find h s
       with Not_found -> IDENT(s) 
         
 
-# 33 "mmllexer.ml"
+# 35 "mmllexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base =
    "\000\000\228\255\229\255\230\255\231\255\232\255\233\255\234\255\
@@ -156,154 +158,154 @@ let rec token lexbuf =
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 40 "mmllexer.mll"
+# 41 "mmllexer.mll"
       ( new_line lexbuf; token lexbuf )
-# 162 "mmllexer.ml"
+# 164 "mmllexer.ml"
 
   | 1 ->
-# 42 "mmllexer.mll"
+# 43 "mmllexer.mll"
       ( token lexbuf )
-# 167 "mmllexer.ml"
+# 169 "mmllexer.ml"
 
   | 2 ->
-# 44 "mmllexer.mll"
+# 45 "mmllexer.mll"
       ( comment lexbuf; token lexbuf )
-# 172 "mmllexer.ml"
+# 174 "mmllexer.ml"
 
   | 3 ->
 let
-# 45 "mmllexer.mll"
-              n
-# 178 "mmllexer.ml"
-= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 46 "mmllexer.mll"
+              n
+# 180 "mmllexer.ml"
+= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
+# 47 "mmllexer.mll"
       ( CST( int_of_string n) )
-# 182 "mmllexer.ml"
+# 184 "mmllexer.ml"
 
   | 4 ->
 let
-# 47 "mmllexer.mll"
-             i
-# 188 "mmllexer.ml"
-= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 48 "mmllexer.mll"
+             i
+# 190 "mmllexer.ml"
+= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
+# 49 "mmllexer.mll"
       ( keyword_or_ident i )
-# 192 "mmllexer.ml"
+# 194 "mmllexer.ml"
 
   | 5 ->
-# 50 "mmllexer.mll"
+# 51 "mmllexer.mll"
       ( UNIT )
-# 197 "mmllexer.ml"
+# 199 "mmllexer.ml"
 
   | 6 ->
-# 52 "mmllexer.mll"
+# 53 "mmllexer.mll"
       ( PLUS )
-# 202 "mmllexer.ml"
+# 204 "mmllexer.ml"
 
   | 7 ->
-# 54 "mmllexer.mll"
+# 55 "mmllexer.mll"
       ( STAR )
-# 207 "mmllexer.ml"
+# 209 "mmllexer.ml"
 
   | 8 ->
-# 56 "mmllexer.mll"
+# 57 "mmllexer.mll"
       ( MINUS )
-# 212 "mmllexer.ml"
+# 214 "mmllexer.ml"
 
   | 9 ->
-# 58 "mmllexer.mll"
+# 59 "mmllexer.mll"
       ( LPAR )
-# 217 "mmllexer.ml"
+# 219 "mmllexer.ml"
 
   | 10 ->
-# 60 "mmllexer.mll"
+# 61 "mmllexer.mll"
       ( RPAR )
-# 222 "mmllexer.ml"
+# 224 "mmllexer.ml"
 
   | 11 ->
-# 62 "mmllexer.mll"
+# 63 "mmllexer.mll"
       (EQUALS)
-# 227 "mmllexer.ml"
+# 229 "mmllexer.ml"
 
   | 12 ->
-# 64 "mmllexer.mll"
+# 65 "mmllexer.mll"
       (EQONLY)
-# 232 "mmllexer.ml"
+# 234 "mmllexer.ml"
 
   | 13 ->
-# 66 "mmllexer.mll"
+# 67 "mmllexer.mll"
       (DIV)
-# 237 "mmllexer.ml"
+# 239 "mmllexer.ml"
 
   | 14 ->
-# 68 "mmllexer.mll"
+# 69 "mmllexer.mll"
         (AND)
-# 242 "mmllexer.ml"
+# 244 "mmllexer.ml"
 
   | 15 ->
-# 70 "mmllexer.mll"
+# 71 "mmllexer.mll"
         (LE)
-# 247 "mmllexer.ml"
+# 249 "mmllexer.ml"
 
   | 16 ->
-# 72 "mmllexer.mll"
+# 73 "mmllexer.mll"
         (LT)
-# 252 "mmllexer.ml"
+# 254 "mmllexer.ml"
 
   | 17 ->
-# 74 "mmllexer.mll"
+# 75 "mmllexer.mll"
         (NEQ)
-# 257 "mmllexer.ml"
+# 259 "mmllexer.ml"
 
   | 18 ->
-# 76 "mmllexer.mll"
+# 77 "mmllexer.mll"
         (OR)
-# 262 "mmllexer.ml"
+# 264 "mmllexer.ml"
 
   | 19 ->
-# 78 "mmllexer.mll"
+# 79 "mmllexer.mll"
         (RARROW)
-# 267 "mmllexer.ml"
+# 269 "mmllexer.ml"
 
   | 20 ->
-# 80 "mmllexer.mll"
+# 81 "mmllexer.mll"
         (LARROW)
-# 272 "mmllexer.ml"
+# 274 "mmllexer.ml"
 
   | 21 ->
-# 82 "mmllexer.mll"
+# 83 "mmllexer.mll"
         (TWODOT)
-# 277 "mmllexer.ml"
+# 279 "mmllexer.ml"
 
   | 22 ->
-# 84 "mmllexer.mll"
+# 85 "mmllexer.mll"
         (DOT)
-# 282 "mmllexer.ml"
+# 284 "mmllexer.ml"
 
   | 23 ->
-# 86 "mmllexer.mll"
+# 87 "mmllexer.mll"
         (LACC)
-# 287 "mmllexer.ml"
+# 289 "mmllexer.ml"
 
   | 24 ->
-# 88 "mmllexer.mll"
+# 89 "mmllexer.mll"
         (RACC)
-# 292 "mmllexer.ml"
+# 294 "mmllexer.ml"
 
   | 25 ->
-# 90 "mmllexer.mll"
+# 91 "mmllexer.mll"
         (DOTVIRG)
-# 297 "mmllexer.ml"
+# 299 "mmllexer.ml"
 
   | 26 ->
-# 92 "mmllexer.mll"
+# 93 "mmllexer.mll"
       ( raise (Lexing_error ("unknown character : " ^ (lexeme lexbuf))) )
-# 302 "mmllexer.ml"
+# 304 "mmllexer.ml"
 
   | 27 ->
-# 94 "mmllexer.mll"
+# 95 "mmllexer.mll"
       ( EOF )
-# 307 "mmllexer.ml"
+# 309 "mmllexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
@@ -313,24 +315,24 @@ and comment lexbuf =
 and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 98 "mmllexer.mll"
+# 99 "mmllexer.mll"
       ( () )
-# 319 "mmllexer.ml"
+# 321 "mmllexer.ml"
 
   | 1 ->
-# 100 "mmllexer.mll"
+# 101 "mmllexer.mll"
       ( comment lexbuf; comment lexbuf )
-# 324 "mmllexer.ml"
+# 326 "mmllexer.ml"
 
   | 2 ->
-# 102 "mmllexer.mll"
+# 103 "mmllexer.mll"
       ( comment lexbuf )
-# 329 "mmllexer.ml"
+# 331 "mmllexer.ml"
 
   | 3 ->
-# 104 "mmllexer.mll"
+# 105 "mmllexer.mll"
       ( raise (Lexing_error "unterminated comment") )
-# 334 "mmllexer.ml"
+# 336 "mmllexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
