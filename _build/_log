@@ -36,7 +36,7 @@ menhir --ocamlc '/usr/bin/ocamlc.opt -bin-annot' --explain --infer mmlparser.mly
 # Target: mmlpp.cmx, tags: { bin_annot, compile, explain, extension:cmx, extension:ml, file:mmlpp.cmx, file:mmlpp.ml, implem, native, ocaml, quiet, traverse, use_menhir }
 /usr/bin/ocamlopt.opt -c -bin-annot -o mmlpp.cmx mmlpp.ml # cached
 # Target: mmlcat.cmx, tags: { bin_annot, compile, explain, extension:cmx, extension:ml, file:mmlcat.cmx, file:mmlcat.ml, implem, native, ocaml, quiet, traverse, use_menhir }
-/usr/bin/ocamlopt.opt -c -bin-annot -o mmlcat.cmx mmlcat.ml # cached
+/usr/bin/ocamlopt.opt -c -bin-annot -o mmlcat.cmx mmlcat.ml
 # Target: mmlcat.native, tags: { bin_annot, dont_link_with, explain, extension:native, file:mmlcat.native, link, native, ocaml, program, quiet, traverse, use_menhir }
-/usr/bin/ocamlopt.opt mml.cmx mmlparser.cmx mmllexer.cmx mmlpp.cmx mmlcat.cmx -o mmlcat.native # cached
+/usr/bin/ocamlopt.opt mml.cmx mmlparser.cmx mmllexer.cmx mmlpp.cmx mmlcat.cmx -o mmlcat.native
 # Compilation successful.

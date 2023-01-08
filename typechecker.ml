@@ -49,19 +49,26 @@ let type_prog prog =
         let t2 = type_expr e2 tenv in 
         if t0 = TBool && t1 = t2 then t1 
         else if t0 = TBool && t2 = TUnit then t1
-        else failwith "type error"
+        else failwith "type error1"
     | App(f, a) ->
-        let tf = type_expr f tenv in
-        let ta = type_expr a tenv in
-        begin match tf with
-        | TFun(tx, te) ->
-            if tx = ta then te
-            else failwith "type error"
-        | _ -> failwith "type error"
-        end
-    | Fix(x,t1,e) ->
-        let te = type_expr e (SymTbl.add x t1 tenv) in
-        te
+            let tf = type_expr f tenv in
+            let ta = type_expr a tenv in
+            begin match tf with
+            | TFun(tx, te) ->
+                  if tx = ta then te 
+                  else failwith "type error2"
+            | _ -> failwith "type error3"
+            end
+   | Fix(x,t1,e) ->
+          let te = type_expr e (SymTbl.add x t1 tenv) in
+          te
+   | Seq(e1, e2) ->
+          let t1 = type_expr e1 tenv in
+          let t2 = type_expr e2 tenv in 
+          begin match t1 with
+          | TUnit -> t2
+          | _ -> failwith "e1 not Unit" 
+          end
   in
 
   type_expr prog.code SymTbl.empty

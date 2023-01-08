@@ -1,4 +1,4 @@
-(* Interprète Mini-ML *)
+Interprète Mini-ML
 
 open Mml
 
@@ -41,6 +41,7 @@ let eval_prog (p: prog): value =
     | Int n  -> VInt n
     | Bool b -> VBool b
     | Var x -> Env.find x env
+    | Unit -> VUnit
     | Bop(Add, e1, e2) -> VInt (evali e1 env + evali e2 env)
     | Bop(Mul, e1, e2) -> VInt (evali e1 env * evali e2 env)
     | Bop(Sub, e1, e2) -> VInt (evali e1 env - evali e2 env)
@@ -62,23 +63,23 @@ let eval_prog (p: prog): value =
                         | _ -> assert false
                         end
     | Let (x , e1 , e2 ) ->
-        let v1 = eval e1 env in
+      let v1 = eval e1 env in
         let env2 = Env.add x v1 env in
         eval e2 env2
     | Fun(x, _, e) -> 
-        let n = new_ptr() in
+      let n = new_ptr() in
         Hashtbl.add mem n (VClos(x,e,env));
         VPtr(n)
-    | App (e1, e2) ->
-      let eve1 = eval e1 env in
-        match eve1 with
-        | VPtr(n) -> let block = Hashtbl.find mem n in
-            (match block with
-              |VClos (x,b,env2) ->
-                let va = eval e2 env in
-                eval b (Env.add x va env2)
-              | _ -> assert false)
-        | _ -> assert false
+    | Fix(f, x, e1) -> 
+      let adr = new_ptr() in
+        Hashtbl.add mem adr(VClos(f,e1,env));
+        VPtr(adr)
+    | App (f , a) -> 
+      (match eval f env with
+        | VPtr(n) -> ( let v=Hashtbl.find mem n in
+                        match v with VClos (x, b, env') -> let va = eval a env in
+                        eval b (Env.add x va env')
+        | _ -> assert false))
     
   (* Évaluation d'une expression dont la valeur est supposée entière *)
   and evali (e: expr) (env: value Env.t): int = 

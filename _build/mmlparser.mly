@@ -54,29 +54,6 @@ program:
 | (* à compléter *) code=expression EOF { {types=[]; code} }
 ;
 
-simple_expression:
-| n=CST { Int(n) }
-| x=IDENT { Var(x)}
-| TRUE { Bool(true) }
-| FALSE { Bool(false) }
-| UNIT {Unit}
-| se=simple_expression; DOT; x=IDENT { GetF(se, x) } 
-//| LACC (x=IDENT EQONLY e=expression DOTVIRG)+ RACC { Strct(x,e) }
-| LPAR; e=expression; RPAR { e }
-;
-
-expression:
-| e=simple_expression { e }
-| e1=expression op=binop e2=expression { Bop(op, e1, e2) }
-| op=unop e=simple_expression {Uop(op, e)}
-| e1=expression e2=simple_expression { App(e1, e2)}
-| IF e1=expression THEN e2=expression ELSE e3=expression {If(e1,e2,e3)}
-| IF e1=expression THEN e2=expression {If(e1,e2,Unit)}
-| FUN LPAR x=IDENT TWODOT tx=typ RPAR RARROW e=expression {Fun(x, tx, e)}
-| LET x=IDENT t0=list(let_arglist) EQONLY e1=expression IN e2=expression {Let(x,mk_fun t0 e1,e2)}
-| LET REC f=IDENT t0=list(let_arglist) TWODOT t1=typ EQONLY e1=expression IN e2=expression { Let(f,Fix(f,(mk_fun_type t0 t1),(mk_fun t0 e1)),e2) }
-;
-
 let_arglist:
 | LPAR xx=IDENT TWODOT t=typ RPAR { (xx, t) }
 ;
@@ -87,6 +64,31 @@ typ:
 | UNIT_TYPE {TUnit}
 | t1=typ RARROW t2=typ {TFun(t1,t2)}
 | LPAR t=typ RPAR {t}
+;
+
+simple_expression:
+| n=CST { Int(n) }
+| x=IDENT { Var(x)}
+| TRUE { Bool(true) }
+| FALSE { Bool(false) }
+| UNIT {Unit}
+| se=simple_expression DOT x=IDENT { GetF(se, x) } 
+//| LACC (x=IDENT EQONLY e=expression DOTVIRG)+ RACC { Strct(x,e) }
+| LPAR e=expression RPAR { e }
+;
+
+expression:
+| e=simple_expression { e }
+| e1=expression op=binop e2=expression { Bop(op, e1, e2) }
+| op=unop e=simple_expression {Uop(op, e)}
+| e1=expression e2=simple_expression { App(e1, e2)}
+| IF e1=expression THEN e2=expression ELSE e3=expression {If(e1,e2,e3)}
+| IF e1=expression THEN e2=expression {If(e1,e2,Unit)}
+| FUN LPAR x=IDENT TWODOT tx=typ RPAR RARROW e=expression {Fun(x, tx, e)}
+| LET x=IDENT t0=list(let_arglist) EQONLY e1=expression IN e2=expression { Let(x,mk_fun t0 e1,e2) }
+| LET REC f=IDENT t0=list(let_arglist) TWODOT t1=typ EQONLY e1=expression IN e2=expression { Let(f,Fix(f,(mk_fun_type t0 t1),(mk_fun t0 e1)),e2) }
+| e1=simple_expression DOT x=IDENT LARROW e2=expression {SetF (e1, x, e2)}
+| e1=expression DOTVIRG e2=expression {Seq (e1, e2)}
 ;
 
 %inline binop:
